@@ -223,7 +223,13 @@ a {
 
 .subtitle {
   margin: 4px 0 0;
-  color: var(--muted);
+  color: #1a1a1a;
+  font-family: "DM Sans", "Inter", sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 34px;
+  letter-spacing: -0.72px;
 }
 
 .period-switch {
