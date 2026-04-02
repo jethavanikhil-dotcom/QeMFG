@@ -201,7 +201,7 @@ a {
 }
 
 .page-title {
-  margin-top: 14px;
+  margin-top: 16px;
   display: flex;
   justify-content: space-between;
   gap: 12px;
@@ -261,7 +261,7 @@ a {
 }
 
 .kpi-grid {
-  margin-top: 14px;
+  margin-top: 16px;
   display: grid;
   grid-template-columns: repeat(5, minmax(150px, 1fr));
   gap: 12px;
@@ -335,7 +335,7 @@ a {
 }
 
 .chart-section {
-  margin-top: 14px;
+  margin-top: 16px;
   padding: 12px;
 }
 
@@ -457,7 +457,7 @@ a {
 }
 
 .two-col {
-  margin-top: 14px;
+  margin-top: 16px;
   display: grid;
   grid-template-columns: repeat(2, minmax(300px, 1fr));
   gap: 12px;
@@ -565,7 +565,7 @@ a {
 }
 
 .top-opportunities {
-  margin-top: 14px;
+  margin-top: 16px;
 }
 
 .table-intro {
