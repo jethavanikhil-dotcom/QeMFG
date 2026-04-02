@@ -19,7 +19,7 @@
 body {
   margin: 0;
   font-family: "Inter", sans-serif;
-  background: var(--bg);
+  background: #ffffff;
   color: var(--text);
 }
 
@@ -35,7 +35,7 @@ a {
 }
 
 .sidebar {
-  background: #fff;
+  background: #f9fbfc;
   border-right: 1px solid var(--border);
   padding: 14px 10px;
   overflow-y: auto;
