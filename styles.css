@@ -352,6 +352,16 @@ a {
   font-size: 24px;
 }
 
+.chart-section .section-head p {
+  color: #878787;
+  font-family: "DM Sans", "Inter", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 24px;
+  word-wrap: break-word;
+}
+
 .line-chart-wrap {
   margin-top: 8px;
 }
