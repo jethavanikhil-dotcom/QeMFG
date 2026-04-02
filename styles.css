@@ -256,6 +256,10 @@ a {
   padding: 14px 14px 12px;
 }
 
+.kpi-grid .kpi-card:first-child {
+  background: #f0efeb;
+}
+
 .kpi-top {
   display: flex;
   align-items: center;
