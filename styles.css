@@ -44,24 +44,14 @@ a {
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0;
   margin: 6px 6px 14px;
 }
 
-.brand-logo {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  color: var(--primary-dark);
-  background: #e8f4fb;
-}
-
-.brand-name {
-  font-size: 25px;
-  font-weight: 800;
-  color: #0a4f7a;
+.brand-image {
+  width: 140px;
+  height: auto;
+  display: block;
 }
 
 .user-panel {
