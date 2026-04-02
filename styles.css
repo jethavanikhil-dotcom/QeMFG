@@ -326,7 +326,13 @@ a {
 
 .section-head h3 {
   margin: 0;
-  font-size: 35px;
+  color: #1a1a1a;
+  font-family: "DM Sans", "Inter", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 26px;
+  letter-spacing: -0.54px;
 }
 
 .section-head p {
@@ -587,10 +593,6 @@ tbody tr:hover {
 @media (max-width: 1550px) {
   .kpi-grid {
     grid-template-columns: repeat(3, minmax(180px, 1fr));
-  }
-
-  .section-head h3 {
-    font-size: 28px;
   }
 
   .section-head p {
