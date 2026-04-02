@@ -615,11 +615,12 @@ a {
 }
 
 .table-card th {
-  color: #9ba5b2;
-  font-weight: 600;
+  color: #3f4344;
+  font-weight: 700;
   font-size: 12px;
+  line-height: 20px;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  word-wrap: break-word;
   background: #f9fbfc;
   border-top: 0;
   border-bottom: 1px solid #edf1f5;
