@@ -316,6 +316,7 @@
 
         const svg = document.createElementNS(svgNs, "svg");
         svg.setAttribute("viewBox", `0 0 ${viewWidth} ${viewHeight}`);
+        svg.setAttribute("preserveAspectRatio", "none");
         svg.setAttribute("role", "img");
         svg.setAttribute("aria-label", "Monthly sales line chart");
 
