@@ -414,6 +414,8 @@ a {
 
 .donut-card {
   padding: 12px;
+  background: #f5f7f8;
+  border-radius: 8px;
 }
 
 .donut-content {
