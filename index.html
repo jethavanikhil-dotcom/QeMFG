@@ -133,37 +133,7 @@
             <p>Sales performance over the selected period</p>
           </div>
           <div class="line-chart-wrap">
-            <svg viewBox="0 0 1000 240" class="line-chart" role="img" aria-label="Sales line chart">
-              <g class="grid">
-                <line x1="0" y1="20" x2="1000" y2="20"></line>
-                <line x1="0" y1="70" x2="1000" y2="70"></line>
-                <line x1="0" y1="120" x2="1000" y2="120"></line>
-                <line x1="0" y1="170" x2="1000" y2="170"></line>
-                <line x1="0" y1="220" x2="1000" y2="220"></line>
-              </g>
-              <polyline
-                points="15,110 95,200 175,200 255,205 335,185 415,85 495,120 575,45 655,70 735,130 815,95 895,95 975,135"
-                class="sales-line"
-              />
-              <line x1="445" y1="15" x2="445" y2="220" class="dashed-marker"></line>
-              <circle cx="445" cy="120" r="5" class="point"></circle>
-              <rect x="418" y="90" width="56" height="26" rx="6" class="tooltip-bg"></rect>
-              <text x="446" y="108" text-anchor="middle" class="tooltip-text">35000</text>
-              <g class="labels">
-                <text x="0" y="238">Nov</text>
-                <text x="80" y="238">Dec</text>
-                <text x="160" y="238">Jan</text>
-                <text x="240" y="238">Feb</text>
-                <text x="320" y="238">Mar</text>
-                <text x="400" y="238">Apr</text>
-                <text x="480" y="238">May</text>
-                <text x="560" y="238">Jun</text>
-                <text x="640" y="238">Jul</text>
-                <text x="720" y="238">Aug</text>
-                <text x="800" y="238">Sep</text>
-                <text x="880" y="238">Oct</text>
-              </g>
-            </svg>
+            <div id="monthly-sales-chart" class="monthly-sales-chart" aria-label="Sales line chart"></div>
             <p class="axis-label">Sales Value</p>
           </div>
         </section>
@@ -296,5 +266,169 @@
         </section>
       </main>
     </div>
+    <script>
+      (function renderMonthlySalesChart() {
+        const chartRoot = document.querySelector("#monthly-sales-chart");
+        if (!chartRoot) {
+          return;
+        }
+        const months = ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"];
+        const salesValues = [68000, 7000, 7000, 4000, 73000, 35000, 90000, 70000, 39000, 62000, 62000, 33000];
+        const yTicks = [100000, 75000, 50000, 25000, 0];
+
+        const svgNs = "http://www.w3.org/2000/svg";
+        const viewWidth = 1000;
+        const viewHeight = 240;
+        const margin = { top: 16, right: 14, bottom: 32, left: 48 };
+        const plotWidth = viewWidth - margin.left - margin.right;
+        const plotHeight = viewHeight - margin.top - margin.bottom;
+
+        function xAt(index) {
+          return margin.left + (index * plotWidth) / (months.length - 1);
+        }
+
+        function yAt(value) {
+          return margin.top + ((100000 - value) * plotHeight) / 100000;
+        }
+
+        function buildSmoothPath(points) {
+          if (!points.length) {
+            return "";
+          }
+          let path = `M ${points[0].x} ${points[0].y}`;
+          for (let i = 0; i < points.length - 1; i += 1) {
+            const p0 = points[i - 1] || points[i];
+            const p1 = points[i];
+            const p2 = points[i + 1];
+            const p3 = points[i + 2] || p2;
+            const cp1x = p1.x + (p2.x - p0.x) / 6;
+            const cp1y = p1.y + (p2.y - p0.y) / 6;
+            const cp2x = p2.x - (p3.x - p1.x) / 6;
+            const cp2y = p2.y - (p3.y - p1.y) / 6;
+            path += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
+          }
+          return path;
+        }
+
+        const points = months.map(function toPoint(month, index) {
+          return { month, value: salesValues[index], x: xAt(index), y: yAt(salesValues[index]) };
+        });
+
+        const svg = document.createElementNS(svgNs, "svg");
+        svg.setAttribute("viewBox", `0 0 ${viewWidth} ${viewHeight}`);
+        svg.setAttribute("role", "img");
+        svg.setAttribute("aria-label", "Monthly sales line chart");
+
+        const grid = document.createElementNS(svgNs, "g");
+        grid.setAttribute("class", "line-chart-grid");
+        yTicks.forEach(function addYGrid(tick) {
+          const y = yAt(tick);
+          const line = document.createElementNS(svgNs, "line");
+          line.setAttribute("x1", margin.left);
+          line.setAttribute("y1", y);
+          line.setAttribute("x2", viewWidth - margin.right);
+          line.setAttribute("y2", y);
+          grid.appendChild(line);
+
+          const label = document.createElementNS(svgNs, "text");
+          label.setAttribute("x", margin.left - 8);
+          label.setAttribute("y", y + 4);
+          label.setAttribute("text-anchor", "end");
+          label.setAttribute("class", "line-chart-y-label");
+          label.textContent = String(tick);
+          grid.appendChild(label);
+        });
+        svg.appendChild(grid);
+
+        const xLabels = document.createElementNS(svgNs, "g");
+        xLabels.setAttribute("class", "line-chart-x-labels");
+        points.forEach(function addXLabel(point) {
+          const label = document.createElementNS(svgNs, "text");
+          label.setAttribute("x", point.x);
+          label.setAttribute("y", viewHeight - 8);
+          label.setAttribute("text-anchor", "middle");
+          label.setAttribute("class", "line-chart-x-label");
+          label.textContent = point.month;
+          xLabels.appendChild(label);
+        });
+        svg.appendChild(xLabels);
+
+        const line = document.createElementNS(svgNs, "path");
+        line.setAttribute("class", "sales-line");
+        line.setAttribute("d", buildSmoothPath(points));
+        svg.appendChild(line);
+
+        points.forEach(function addPointMarker(point) {
+          const marker = document.createElementNS(svgNs, "circle");
+          marker.setAttribute("cx", point.x);
+          marker.setAttribute("cy", point.y);
+          marker.setAttribute("r", "4");
+          marker.setAttribute("class", "chart-point");
+          svg.appendChild(marker);
+        });
+
+        const activeGuide = document.createElementNS(svgNs, "line");
+        activeGuide.setAttribute("class", "dashed-marker");
+        activeGuide.setAttribute("y1", margin.top);
+        activeGuide.setAttribute("y2", margin.top + plotHeight);
+        svg.appendChild(activeGuide);
+
+        const activePoint = document.createElementNS(svgNs, "circle");
+        activePoint.setAttribute("class", "point");
+        activePoint.setAttribute("r", "5");
+        svg.appendChild(activePoint);
+
+        const interactionLayer = document.createElementNS(svgNs, "rect");
+        interactionLayer.setAttribute("x", margin.left);
+        interactionLayer.setAttribute("y", margin.top);
+        interactionLayer.setAttribute("width", plotWidth);
+        interactionLayer.setAttribute("height", plotHeight);
+        interactionLayer.setAttribute("fill", "transparent");
+        interactionLayer.style.cursor = "crosshair";
+        svg.appendChild(interactionLayer);
+
+        const tooltip = document.createElement("div");
+        tooltip.className = "chart-tooltip";
+        chartRoot.innerHTML = "";
+        chartRoot.appendChild(svg);
+        chartRoot.appendChild(tooltip);
+
+        function setActivePoint(index) {
+          const current = points[index];
+          activeGuide.setAttribute("x1", current.x);
+          activeGuide.setAttribute("x2", current.x);
+          activePoint.setAttribute("cx", current.x);
+          activePoint.setAttribute("cy", current.y);
+          tooltip.textContent = String(current.value);
+          tooltip.style.left = `${(current.x / viewWidth) * 100}%`;
+          tooltip.style.top = `${(current.y / viewHeight) * 100}%`;
+        }
+
+        function nearestIndex(pointerEvent) {
+          const bounds = chartRoot.getBoundingClientRect();
+          const relativeX = ((pointerEvent.clientX - bounds.left) / bounds.width) * viewWidth;
+          let closest = 0;
+          let distance = Number.POSITIVE_INFINITY;
+          points.forEach(function compareDistance(point, index) {
+            const currentDistance = Math.abs(point.x - relativeX);
+            if (currentDistance < distance) {
+              closest = index;
+              distance = currentDistance;
+            }
+          });
+          return closest;
+        }
+
+        interactionLayer.addEventListener("mousemove", function onMouseMove(event) {
+          setActivePoint(nearestIndex(event));
+        });
+
+        interactionLayer.addEventListener("mouseenter", function onMouseEnter(event) {
+          setActivePoint(nearestIndex(event));
+        });
+
+        setActivePoint(5);
+      })();
+    </script>
   </body>
 </html>
