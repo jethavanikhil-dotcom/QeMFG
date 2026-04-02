@@ -277,8 +277,8 @@
         const yTicks = [100000, 75000, 50000, 25000, 0];
 
         const svgNs = "http://www.w3.org/2000/svg";
-        const viewWidth = 1000;
-        const viewHeight = 240;
+        const viewWidth = chartRoot.clientWidth || 1000;
+        const viewHeight = 250;
         const margin = { top: 16, right: 14, bottom: 32, left: 48 };
         const plotWidth = viewWidth - margin.left - margin.right;
         const plotHeight = viewHeight - margin.top - margin.bottom;
@@ -316,7 +316,6 @@
 
         const svg = document.createElementNS(svgNs, "svg");
         svg.setAttribute("viewBox", `0 0 ${viewWidth} ${viewHeight}`);
-        svg.setAttribute("preserveAspectRatio", "none");
         svg.setAttribute("role", "img");
         svg.setAttribute("aria-label", "Monthly sales line chart");
 
