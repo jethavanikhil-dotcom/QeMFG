@@ -167,8 +167,12 @@ a {
 }
 
 .topbar {
-  min-height: 56px;
-  padding: 0 16px;
+  min-height: auto;
+  padding: 12px 16px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid #e5e5e5;
   display: flex;
   justify-content: space-between;
   align-items: center;
