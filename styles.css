@@ -268,8 +268,13 @@ a {
 
 .kpi-top h3 {
   margin: 0;
-  font-size: 38px;
+  color: #1a1a1a;
+  font-family: "DM Sans", "Inter", sans-serif;
+  font-size: 30px;
+  font-style: normal;
   font-weight: 700;
+  line-height: 40px;
+  letter-spacing: -0.9px;
 }
 
 .kpi-card p {
