@@ -297,8 +297,13 @@ a {
 
 .kpi-card p {
   margin: 8px 0 0;
-  color: #2c3745;
-  font-size: 25px;
+  color: #1a1a1a;
+  font-family: "DM Sans", "Inter", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: -0.48px;
 }
 
 .trend {
