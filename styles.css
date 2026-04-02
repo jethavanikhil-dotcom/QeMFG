@@ -621,9 +621,11 @@ a {
   line-height: 20px;
   text-transform: uppercase;
   word-wrap: break-word;
-  background: #f9fbfc;
+  background: transparent;
   border-top: 0;
-  border-bottom: 1px solid #edf1f5;
+  border-bottom: 1px solid #e5e5e5;
+  padding-top: 12px;
+  padding-bottom: 12px;
   white-space: nowrap;
 }
 
